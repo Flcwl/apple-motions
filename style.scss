@@ -39,7 +39,7 @@ html, body {
   justify-content: center;
 }
 
-.canvas-wrapper.wrapper-1 {
-  -webkit-transition: opacity 1s cubic-bezier(0.75, 0.42, 1, 0.99);
-  transition: opacity 1s cubic-bezier(0.75, 0.42, 1, 0.99);
+.canvas-wrapper .wrapper-2 {
+  transition: all 0.3s;
+  will-change: transform;
 }

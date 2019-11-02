@@ -2,7 +2,7 @@
  * @Description: apple AirPods Pro Animation Fork
  * @Author: Flcwl
  * @Date: 2019-11-02 14:56:38
- * @LastEditTime: 2019-11-02 20:26:06
+ * @LastEditTime: 2019-11-02 21:39:45
  * @LastEditors: Flcwl
  */
 
@@ -17,7 +17,6 @@ var appleAirPodsPro = {
     this.initData()
     this.handleResize()
     this.bindEvents()
-    
   },
 
   initData() {
@@ -27,8 +26,10 @@ var appleAirPodsPro = {
 
     this.start = 1
     this.addN = 1
-    this.interval = 50
+    this.interval = 3 // 控制刷新率
     this.curScrollY = this.getScrollTop()
+    this.lastPos = this.curScrollY
+    this.isStop = false
     this.MAX_LEN = Object.keys(images).length || 0
   },
 
@@ -42,8 +43,12 @@ var appleAirPodsPro = {
     return window.scrollY || 0
   },
   getImage(num) {
-    console.assert(Number.isInteger(num) && num > 0 && num < this.MAX_LEN)
+    console.assert(Number.isInteger(num) && num > -1 && num < this.MAX_LEN)
     return images[('' + this.start).padStart(4, '0')]
+  },
+
+  isOver() {
+    return this.start < 0 || this.start > this.MAX_LEN - 1
   },
 
   handleScroll() {
@@ -55,12 +60,30 @@ var appleAirPodsPro = {
     this.curScrollY = scrollY
 
     if (delta < this.interval) return
-    if (this.start < 0 && this.start > this.MAX_LEN) return
 
-    const img = this.getImage(
-      isDown ? (this.start += this.addN) : (this.start -= this.addN)
-    )
+    isDown ? (this.start += this.addN) : (this.start -= this.addN)
+    // if (this.isOver() && !this.isStop) {
+    //   // this.lastPos = scrollY
+    //   this.isStop = true
+    //   console.log(scrollY, this.lastPos)
+    // }
+    // if (
+    //   // this.isOver() &&
+    //   this.isStop &&
+    //   this.curScrollY < this.lastPos
+    //   // (isDown && this.curScrollY < this.lastPos))
+    // ) {
+    //   this.isStop = false
+    // }
 
+    // if (this.isStop) return
+
+    if (this.start < 0) return (this.start = 0)
+    if (this.start > this.MAX_LEN - 1) return (this.start = this.MAX_LEN - 1)
+
+    this.isStop = false
+    this.lastPos = scrollY
+    const img = this.getImage(this.start)
     this.triggerDraw(img)
   },
 
