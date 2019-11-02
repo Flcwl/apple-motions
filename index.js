@@ -1,84 +1,90 @@
+/*
+ * @Description: apple AirPods Pro Animation Fork
+ * @Author: Flcwl
+ * @Date: 2019-11-02 14:56:38
+ * @LastEditTime: 2019-11-02 20:26:06
+ * @LastEditors: Flcwl
+ */
+
 import './style.scss'
 // https://github.com/parcel-bundler/parcel/issues/1668
 import images from './images/*.jpg'
-console.log('HelloWorld!')
 
-var img = document.getElementById('view')
-var index = 1
-var add = 1
-
-setInterval(() => {
-  index += add
-  if (index > 131) {
-    add = add * -1
-  }
-  if (index < 0) {
-    add = add * -1
-    index = 1
-  }
-  var j = ('' + index).padStart(4, '0')
-  // img.src = images[j]
-  // console.log(j)
-  draw(images[j])
-}, 90)
-
-function draw(imgSrc) {
-  var context = canvas2.getContext('2d')
-  var img = new Image()
-
-  img.onload = function() {
-    canvas2.width = img.width
-    canvas2.height = img.height
-
-    context.drawImage(img, 0, 0)
-  }
-
-  img.src = imgSrc
-}
-
-var canvas2 = document.getElementById('02-head-bob-turn')
+console.log('Hello AirPods-Pro!')
 
 var appleAirPodsPro = {
   init() {
     this.initData()
     this.handleResize()
     this.bindEvents()
+    
   },
 
   initData() {
     this.canvas2 = document.getElementById('02-head-bob-turn')
+    this.context = this.canvas2.getContext('2d')
+    this.img = new Image()
+
+    this.start = 1
+    this.addN = 1
+    this.interval = 50
+    this.curScrollY = this.getScrollTop()
+    this.MAX_LEN = Object.keys(images).length || 0
   },
 
   bindEvents() {
-    window.onresize = this.handleResize
-    window.scroll = this.handleScroll
+    window.addEventListener('resize', () => this.handleResize())
+    window.addEventListener('scroll', () => this.handleScroll())
+    this.img.addEventListener('load', () => this.drawCanvas())
+  },
+
+  getScrollTop() {
+    return window.scrollY || 0
+  },
+  getImage(num) {
+    console.assert(Number.isInteger(num) && num > 0 && num < this.MAX_LEN)
+    return images[('' + this.start).padStart(4, '0')]
   },
 
   handleScroll() {
-    console.log(111);
-    
+    const scrollY = this.getScrollTop()
+    let delta = scrollY - this.curScrollY
+    const isDown = delta > 0
+
+    delta = Math.abs(delta)
+    this.curScrollY = scrollY
+
+    if (delta < this.interval) return
+    if (this.start < 0 && this.start > this.MAX_LEN) return
+
+    const img = this.getImage(
+      isDown ? (this.start += this.addN) : (this.start -= this.addN)
+    )
+
+    this.triggerDraw(img)
   },
 
   handleResize() {
-    const wScale = window.innerWidth / (canvas2.width || 1458)
-    const hScale = (window.innerHeight - 52) / (canvas2.height || 1458)
+    const wScale = window.innerWidth / (this.canvas2.width || 1458)
+    const hScale = (window.innerHeight - 52) / (this.canvas2.height || 1458)
 
-    canvas2.style.transform = `matrix(${wScale}, 0, 0, ${hScale}, 0, 0)`
-    // canvas2.style.cssText = `transform:matrix(1.18171, 0, 0, 1.18171, 0, 0);opacity: 1;`
+    this.canvas2.style.transform = `matrix(${wScale}, 0, 0, ${hScale}, 0, 0)`
+    // TODO: 多个 canvas 用 opacity 切换
+    // this.canvas2.style.cssText = `transform:matrix(1.18171, 0, 0, 1.18171, 0, 0);opacity: 1;`
   },
 
-  drawCanvas(imgSrc) {
-    var context = canvas2.getContext('2d')
-    var img = new Image()
+  triggerDraw(img) {
+    this.img.src = img
+  },
 
-    img.onload = function() {
-      canvas2.width = img.width
-      canvas2.height = img.height
+  drawCanvas() {
+    const imgTemp = this.img
+    const canvas = this.canvas2
 
-      context.drawImage(img, 0, 0)
-    }
+    canvas.width = imgTemp.width
+    canvas.height = imgTemp.height
 
-    img.src = imgSrc
+    this.context.drawImage(imgTemp, 0, 0)
   },
 }
 
