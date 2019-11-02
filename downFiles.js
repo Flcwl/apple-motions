@@ -1,25 +1,25 @@
 #!/usr/bin/env node
 
-const request = require('request')
-const fs = require('fs')
-const path = require('path')
-console.log('HelloWorld!')
+const request = require('request');
+const fs = require('fs');
+const path = require('path');
+console.log('HelloWorld!');
 
 function clearDir(path) {
-  let files = []
-  let separator = '/'
+  let files = [];
+  let separator = '/';
 
   if (fs.existsSync(path)) {
-    files = fs.readdirSync(path)
+    files = fs.readdirSync(path);
     files.forEach(file => {
-      let curPath = path + separator + file
+      let curPath = path + separator + file;
 
       if (fs.statSync(curPath).isDirectory()) {
-        clearDir(curPath)
+        clearDir(curPath);
       } else {
-        fs.unlinkSync(curPath)
+        fs.unlinkSync(curPath);
       }
-    })
+    });
   }
 }
 
@@ -36,39 +36,36 @@ function downloadPic(src, dest) {
     function(error, response, body) {
       if (!error && response.statusCode === 200) {
         if (/image\/jpeg/.test(response.headers['content-type'])) {
-
           request(src)
             .pipe(fs.createWriteStream(dest))
             .on('close', function() {
-              console.log(dest)
-            })
+              console.log(dest);
+            });
         }
       }
     }
-  )
+  );
 }
 
 const srcDir =
-  'https://www.apple.com/105/media/us/airpods-pro/2019/1299e2f5_9206_4470_b28e_08307a42f19b/anim/sequence/large'
-const type = '/02-head-bob-turn/'
+  'https://www.apple.com/105/media/us/airpods-pro/2019/1299e2f5_9206_4470_b28e_08307a42f19b/anim/sequence/large';
+const type = '/02-head-bob-turn/';
 // const type = '/03-flip-for-guts/'
-const discDir = path.resolve(__dirname, './images/')
-const imgSuffix = '.jpg'
-const NMAX = 300
-let j, f, s, d
+const discDir = path.resolve(__dirname, './images/');
+const imgSuffix = '.jpg';
+const NMAX = 300;
+let j, f, s, d;
 
-clearDir('./images')
+clearDir('./images');
 
 for (let i = 0; i < NMAX; i++) {
-  j = ('' + i).padStart(4, '0')
-  f = j + imgSuffix
-  s = srcDir + type + f
-  d = path.resolve(discDir, f)
+  j = ('' + i).padStart(4, '0');
+  f = j + imgSuffix;
+  s = srcDir + type + f;
+  d = path.resolve(discDir, f);
 
-  downloadPic(s, d)
+  downloadPic(s, d);
 }
-
-
 
 // 爬虫、劫持、无头模拟
 // function spider(url = 'https://www.apple.com/cn/airpods-pro/') {
