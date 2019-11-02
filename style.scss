@@ -1,3 +1,45 @@
-#view {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #000;
+}
+
+.sequence-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
   width: 100%;
+}
+
+.scroll-sequence {
+  position: absolute;
+  height: 4110vh;
+  width: 100%;
+  top: 0;
+}
+
+.image-sequence {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  overflow: hidden;
+}
+
+.canvas-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 52px);
+  padding-top: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas-wrapper.wrapper-1 {
+  -webkit-transition: opacity 1s cubic-bezier(0.75, 0.42, 1, 0.99);
+  transition: opacity 1s cubic-bezier(0.75, 0.42, 1, 0.99);
 }
