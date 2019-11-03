@@ -1,8 +1,8 @@
 /*
- * @Description: apple AirPods Pro Animation Fork
+ * @Description: apple AirPods Pro Animation Imitation
  * @Author: Flcwl
  * @Date: 2019-11-02 14:56:38
- * @LastEditTime: 2019-11-03 01:32:47
+ * @LastEditTime: 2019-11-03 11:51:23
  * @LastEditors: Flcwl
  */
 
@@ -15,6 +15,7 @@ console.log('Hello AirPods-Pro!');
 var appleAirPodsPro = {
   init() {
     this.initData();
+    this.initImages();
     this.handleResize();
     this.bindEvents();
   },
@@ -22,8 +23,8 @@ var appleAirPodsPro = {
   initData() {
     this.canvas2 = document.getElementById('02-head-bob-turn');
     this.context = this.canvas2.getContext('2d');
-    this.img = new Image();
-
+    this.MAX_LEN = Object.keys(images).length || 0;
+    this.imgs = [];
     this.start = 1;
     this.oldStart = -1;
     this.addN = 1;
@@ -33,13 +34,21 @@ var appleAirPodsPro = {
     this.startPos = this.curScrollY;
     this.lastPos = this.curScrollY;
     this.isStop = false;
-    this.MAX_LEN = Object.keys(images).length || 0;
+  },
+
+  initImages() {
+    for (let i = 0; i < this.MAX_LEN; i++) {
+      const img = new Image();
+      // img.onload = () => this.imgs[i] = img
+      img.src = this.getImage(i);
+      // 不管加载否 保证顺序
+      this.imgs.push(img);
+    }
   },
 
   bindEvents() {
     window.addEventListener('resize', () => this.handleResize());
     window.addEventListener('scroll', () => this.handleScroll());
-    this.img.addEventListener('load', () => this.drawCanvas());
   },
 
   getScrollTop() {
@@ -48,7 +57,7 @@ var appleAirPodsPro = {
 
   getImage(num) {
     console.assert(Number.isInteger(num) && num > -1 && num < this.MAX_LEN);
-    return images[('' + this.start).padStart(4, '0')];
+    return images[('' + num).padStart(4, '0')];
   },
 
   isOver() {
@@ -72,32 +81,30 @@ var appleAirPodsPro = {
     }
     if (this.isStop) return;
 
-    // good idea
+    // good idea: 补偿
     const alpha = Math.floor(delta / this.interval) * this.addN || 0;
-    this.leftY = delta % this.interval
+    this.leftY = delta % this.interval;
 
     isDown ? (this.start += alpha) : (this.start -= alpha);
     if (this.isOver() && !this.isStop) {
       // this.lastPos = scrollY
       this.isStop = true;
       console.log(this.start, scrollY, this.lastPos);
+
       // TODO: 多个 canvas 用 opacity 切换
       // this.canvas2.style.cssText = `opacity: 0;`
     }
 
     if (this.start < 0) this.start = 0;
     if (this.start > this.MAX_LEN - 1) this.start = this.MAX_LEN - 1;
-
-    // good idea
-    this.lastPos = scrollY;
-    this.needDown = !isDown;
     if (this.startPos >= scrollY) this.start = 0;
-    // console.log(this.start)
-
     if (this.oldStart === this.start) return;
     this.oldStart = this.start;
-    const img = this.getImage(this.start);
-    this.triggerDraw(img);
+    // good idea：记录
+    this.lastPos = scrollY;
+    this.needDown = !isDown;
+
+    this.drawCanvas(this.start);
   },
 
   handleResize() {
@@ -107,18 +114,21 @@ var appleAirPodsPro = {
     this.canvas2.style.transform = `matrix(${wScale}, 0, 0, ${hScale}, 0, 0)`;
   },
 
-  triggerDraw(img) {
-    this.img.src = img;
-  },
-
-  drawCanvas() {
-    const imgTemp = this.img;
+  drawCanvas(sequence) {
+    // 当前序列帧
+    const imgTemp = this.imgs[sequence];
     const canvas = this.canvas2;
 
     canvas.width = imgTemp.width;
     canvas.height = imgTemp.height;
 
     this.context.drawImage(imgTemp, 0, 0);
+
+    // const t = sequence / this.MAX_LEN
+    // const wScale = window.innerWidth / (this.canvas2.width || 1458);
+    // const hScale = (window.innerHeight - 52) / (this.canvas2.height || 1458);
+
+    // this.canvas2.style.transform = `matrix(${1 + t * (wScale - 1)}, 0, 0, ${1 + t * (hScale - 1)}, 0, 0)`;
   },
 };
 
