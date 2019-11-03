@@ -2,7 +2,7 @@
  * @Description: apple AirPods Pro Animation Fork
  * @Author: Flcwl
  * @Date: 2019-11-02 14:56:38
- * @LastEditTime: 2019-11-03 00:50:42
+ * @LastEditTime: 2019-11-03 01:32:47
  * @LastEditors: Flcwl
  */
 
@@ -60,8 +60,7 @@ var appleAirPodsPro = {
     let delta = scrollY - this.curScrollY;
     const isDown = delta > 0;
 
-    delta = Math.abs(delta);
-    // + this.leftY
+    delta = Math.abs(delta) + this.leftY;
     this.curScrollY = scrollY;
 
     if (
@@ -74,9 +73,8 @@ var appleAirPodsPro = {
     if (this.isStop) return;
 
     // good idea
-    const alpha = Math.floor(delta / this.interval) * this.addN || this.addN;
-    this.leftY = this.delta % this.interval
-    // console.log(alpha)
+    const alpha = Math.floor(delta / this.interval) * this.addN || 0;
+    this.leftY = delta % this.interval
 
     isDown ? (this.start += alpha) : (this.start -= alpha);
     if (this.isOver() && !this.isStop) {
