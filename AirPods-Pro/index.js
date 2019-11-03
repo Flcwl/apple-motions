@@ -2,7 +2,7 @@
  * @Description: apple AirPods Pro Animation Imitation
  * @Author: Flcwl
  * @Date: 2019-11-02 14:56:38
- * @LastEditTime: 2019-11-03 11:51:23
+ * @LastEditTime: 2019-11-03 19:51:47
  * @LastEditors: Flcwl
  */
 
@@ -81,7 +81,7 @@ var appleAirPodsPro = {
     }
     if (this.isStop) return;
 
-    // good idea: 补偿
+    // good idea: 补偿 相对之前，解决了动画过快或过慢 根滚动条的速度（滚动条有快慢加速度感应，停止滚动也会有余动）来换帧
     const alpha = Math.floor(delta / this.interval) * this.addN || 0;
     this.leftY = delta % this.interval;
 
