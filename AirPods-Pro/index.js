@@ -2,13 +2,14 @@
  * @Description: apple AirPods Pro Animation Fork
  * @Author: Flcwl
  * @Date: 2019-11-02 14:56:38
- * @LastEditTime: 2019-11-03 12:19:42
+ * @LastEditTime: 2019-11-03 12:50:54
  * @LastEditors: Flcwl
  */
 
 import './style.scss';
 // https://github.com/parcel-bundler/parcel/issues/1668
 import images from './images/*.jpg';
+import { setInterval } from 'timers';
 
 console.log('Hello AirPods-Pro!');
 
@@ -74,7 +75,7 @@ var appleAirPodsPro = {
 
     // good idea
     const alpha = Math.floor(delta / this.interval) * this.addN || 0;
-    this.leftY = delta % this.interval
+    this.leftY = delta % this.interval;
 
     isDown ? (this.start += alpha) : (this.start -= alpha);
     if (this.isOver() && !this.isStop) {
@@ -97,7 +98,8 @@ var appleAirPodsPro = {
     if (this.oldStart === this.start) return;
     this.oldStart = this.start;
     const img = this.getImage(this.start);
-    this.triggerDraw(img);
+    // this.triggerDraw(img);
+    this.drawImg(img);
   },
 
   handleResize() {
@@ -120,6 +122,33 @@ var appleAirPodsPro = {
 
     this.context.drawImage(imgTemp, 0, 0);
   },
+
+  drawImg(img) {
+    this.canvas2.style.display = 'none';
+    document.getElementById('sequence-img').src = img;
+  },
 };
 
-appleAirPodsPro.init();
+// appleAirPodsPro.init();
+// runTimerAnimation();
+
+function runTimerAnimation() {
+  document.getElementById('02-head-bob-turn').style.display = 'none';
+  const img = document.getElementById('sequence-img');
+  let index = 1;
+  let add = 1;
+
+  setInterval(() => {
+    index += add;
+    if (index > 131) {
+      add = add * -1;
+      index = 131
+    }
+    if (index < 0) {
+      add = add * -1;
+      index = 1;
+    }
+    var j = ('' + index).padStart(4, '0');
+    img.src = `https://www.apple.com/105/media/us/airpods-pro/2019/1299e2f5_9206_4470_b28e_08307a42f19b/anim/sequence/large/02-head-bob-turn/${j}.jpg`;
+  }, 30);
+}
