@@ -2,7 +2,7 @@
  * @Description: apple AirPods Pro Animation Fork
  * @Author: Flcwl
  * @Date: 2019-11-02 14:56:38
- * @LastEditTime: 2019-11-03 13:06:03
+ * @LastEditTime: 2019-11-03 16:07:02
  * @LastEditors: Flcwl
  */
 
@@ -142,11 +142,11 @@ function runTimerAnimation() {
     index += add;
     if (index > 131) {
       add = add * -1;
-      index = 131
+      index = 130
     }
     if (index < 0) {
       add = add * -1;
-      index = 0;
+      index = 1;
     }
     var j = ('' + index).padStart(4, '0');
     img.src = `https://www.apple.com/105/media/us/airpods-pro/2019/1299e2f5_9206_4470_b28e_08307a42f19b/anim/sequence/large/02-head-bob-turn/${j}.jpg`;
