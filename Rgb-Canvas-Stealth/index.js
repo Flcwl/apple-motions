@@ -68,27 +68,26 @@ var StealthDemo = {
     const imageData = this.context.getImageData(0, 0, this.width, this.height)
 
     // 3.2 process image data
-    const newImageData = this.context.createImageData(imageData) // 0 填充
+    const len = imageData.data.length >> 2
     
-    for (let i = 0; i < imageData.data.length; i += 4) {
-      const r = imageData.data[i];
-      const g = imageData.data[i + 1];
-      const b = imageData.data[i + 2];
-      const alpha = imageData.data[i + 3];
+    for (let i = 0; i < len; i++) {
+      const base = i << 2
+      const r = imageData.data[base + 0];
+      const g = imageData.data[base + 1];
+      const b = imageData.data[base + 2];
 
-      newImageData.data[i] = r
-      newImageData.data[i + 1] = g
-      newImageData.data[i + 2] = b
+      // const isGreenMainColor = g > r && g > b
+      // imageData.data[i + 3] = isGreenMainColor ? 0 : alpha
 
-      const isGreenMainColor = g > r && g > b
-      newImageData.data[i + 3] = isGreenMainColor ? 0 : alpha
+      const DIFF_COLOR = 3
+      const isGreenMainColor = g - r > DIFF_COLOR && g - b > DIFF_COLOR
+      const betterGreenMainColor = isGreenMainColor && g > 100
 
-      // const betterGreenMainColor = g > 100 && isGreenMainColor
-      // const DIFF_COLOR = 5
-      // const betterGreenMainColor = g - r > DIFF_COLOR && g - b > DIFF_COLOR && g > 100
-      // newImageData.data[i + 3] = betterGreenMainColor ? 0 : alpha
+      if (betterGreenMainColor) {
+        imageData.data[base + 3] = 0
+      }
     }
-    return newImageData
+    return imageData
   }
 };
 
