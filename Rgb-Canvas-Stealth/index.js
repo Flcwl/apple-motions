@@ -23,7 +23,6 @@ var StealthDemo = {
 
   initVideoRecord() {
     // 1.1. take media input
-    // support promise
     getUserVideo().then((stream) => {
       // 1.3 put into video tag
       this.video.srcObject = stream
@@ -46,7 +45,6 @@ var StealthDemo = {
     canvas.height = videoHeight;
     this.width = videoWidth
     this.height = videoHeight
-
 
     this.context.drawImage(video, 0, 0, videoWidth, videoHeight);
 
@@ -72,18 +70,23 @@ var StealthDemo = {
     // 3.2 process image data
     const newImageData = this.context.createImageData(imageData) // 0 填充
     
-    // 灰度化
-    // https://baike.baidu.com/item/%E7%81%B0%E5%BA%A6%E5%8C%96
     for (let i = 0; i < imageData.data.length; i += 4) {
       const r = imageData.data[i];
       const g = imageData.data[i + 1];
       const b = imageData.data[i + 2];
       const alpha = imageData.data[i + 3];
 
-      const mean = (r + g + b) / 3
+      newImageData.data[i] = r
+      newImageData.data[i + 1] = g
+      newImageData.data[i + 2] = b
 
-      newImageData.data[i + 2] = newImageData.data[i + 1] = newImageData.data[i] = mean
-      newImageData.data[i + 3] = alpha
+      const isGreenMainColor = g > r && g > b
+      newImageData.data[i + 3] = isGreenMainColor ? 0 : alpha
+
+      // const betterGreenMainColor = g > 100 && isGreenMainColor
+      // const DIFF_COLOR = 5
+      // const betterGreenMainColor = g - r > DIFF_COLOR && g - b > DIFF_COLOR && g > 100
+      // newImageData.data[i + 3] = betterGreenMainColor ? 0 : alpha
     }
     return newImageData
   }

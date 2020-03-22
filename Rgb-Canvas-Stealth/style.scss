@@ -25,7 +25,7 @@ html, body {
 }
 
 .video-wrapper,
-.canvas-wrapper{
+.canvas-wrapper {
   display: flex;
   justify-content: space-around;
   transition: all 0.3s;
@@ -54,4 +54,15 @@ html, body {
   top: 20px;
   left: 20px;
   border-radius: 4px;
+}
+
+// 蔡徐坤武汉大学跳舞演示
+.dance {
+  background-image: url(./assets/wuhan.jpg);
+  background-size: 100% 84%;
+  background-repeat: no-repeat;
+
+  canvas {
+    transform: translateY(60px) scale(0.5);
+  }
 }
