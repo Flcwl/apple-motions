@@ -1,8 +1,7 @@
 /*
- * @Description: userMedia helpper
  * @Author: Flcwl
  * @Date: 2020-03-22 15:18:42
- * @LastEditTime: 2020-03-22 15:42:05
+ * @LastEditTime: 2020-03-22 17:25:35
  * @LastEditors: Flcwl
  */
 function userMedia() {
