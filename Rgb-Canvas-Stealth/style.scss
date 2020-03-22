@@ -8,38 +8,42 @@ html, body {
   background-color: #000;
 }
 
-.sequence-container {
+#root {
   position: absolute;
   top: 0;
   height: 100%;
   width: 100%;
-}
-
-.scroll-sequence {
-  position: absolute;
-  height: 4110vh;
-  width: 100%;
-  top: 0;
-}
-
-.image-sequence {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  overflow: hidden;
-}
-
-.canvas-container {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 52px);
-  padding-top: 52px;
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
-  justify-content: center;
 }
 
-.canvas-wrapper .wrapper-2 {
+.video-wrapper {
+  video {
+    width: auto;
+  }
+}
+
+.video-wrapper,
+.canvas-wrapper{
+  display: flex;
+  justify-content: space-around;
   transition: all 0.3s;
   will-change: transform;
+  // width: fit-content;
+  width: 480px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #998;
+
+  video, canvas {
+    width: 100%;
+  }
+
+  .tip {
+    color: #fff;
+    text-align: center;
+    margin-top: 12px;
+  }
 }

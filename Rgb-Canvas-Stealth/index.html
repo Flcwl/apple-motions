@@ -4,21 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title> Stealth </title>
+    <title>Stealth</title>
   </head>
   <body>
-    <div class="canvas-container">
-      <div
-        class="canvas-wrapper wrapper-2"
-        style="width: 1458px; height: 820px; z-index: 9; opacity: 1;"
-      >
-        <canvas
-          id="02-head-bob-turn"
-          width="1458"
-          height="820"
-        ></canvas>
+    <main id="root">
+      <div class="video-wrapper">
+        <!-- 1.2. create video tag -->
+        <video id="recording-video" controls></video>
+        <h2 class="tip">Video</h2>
       </div>
-    </div>
+      <div class="canvas-wrapper">
+        <!-- 2.1. create video tag -->
+        <canvas id="transform-canvas"></canvas>
+        <h2 class="tip">Canvas</h2>
+      </div>
+    </main>
     <script src="./index.js"></script>
   </body>
 </html>
