@@ -14,6 +14,8 @@ var StealthDemo = {
   initData() {
     this.video = document.getElementById('recording-video');
     this.canvas = document.getElementById('transform-canvas');
+    this.switchBtn = document.getElementById('switch');
+    
     this.context = this.canvas.getContext('2d');
     this.width = this.video.videoWidth
     this.height = this.video.videoHeight
@@ -31,7 +33,8 @@ var StealthDemo = {
   },
 
   bindEvents() {
-    this.video.onplay = () => this.timedTask()
+    // this.video.onplay = () => this.timedTask()
+    this.switchBtn.onclick = () => this.timedTask()
   },
 
   // 2.2 draw function
