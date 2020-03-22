@@ -1,5 +1,5 @@
 {
-  "name": "airpods",
+  "name": "Stealth",
   "version": "1.0.0",
   "description": "fork animation",
   "main": "index.js",
@@ -10,14 +10,8 @@
   "author": "Flcwl",
   "license": "ISC",
   "devDependencies": {
-    "cheerio": "^1.0.0-rc.3",
     "node-sass": "^4.13.0",
     "parcel-bundler": "^1.12.4",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.7",
     "sass": "^1.23.3"
-  },
-  "dependencies": {
-    "puppeteer": "^2.0.0"
   }
 }
