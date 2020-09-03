@@ -6,7 +6,7 @@ console.log('Hello Stealth!');
 var StealthDemo = {
   run() {
     this.initData()
-    this.initVideoRecord()
+    // this.initVideoRecord()
     this.bindEvents()
     this.timedTask()
   },
