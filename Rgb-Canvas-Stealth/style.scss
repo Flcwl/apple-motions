@@ -55,9 +55,16 @@ html, body {
   border-radius: 4px;
 }
 
+.composite {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  // background-image: url(./assets/bg_test1.jpg);
+}
+
+
 // 蔡徐坤武汉大学跳舞演示
-.dance {
-  background-image: url(./assets/wuhan.jpg);
+.composite1 {
+  // background-image: url(./assets/bg_test.jpg);
   background-size: 100% 84%;
   background-repeat: no-repeat;
 
