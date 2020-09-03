@@ -57,37 +57,6 @@ var StealthDemo = {
     this.height = videoHeight;
 
     this.context.drawImage(video, 0, 0, videoWidth, videoHeight);
-
-    this.processAndDrawCanvasImage();
-  },
-
-  processAndDrawCanvasImage() {
-    // 3.1 get pixel data
-    const imageData = this.context.getImageData(0, 0, this.width, this.height);
-    // 3.2 process image data
-    const newImageData = this.processImageData(imageData);
-    // 3.3 put image data
-    this.context.putImageData(newImageData, 0, 0);
-  },
-
-  processImageData(imageData) {
-    const len = imageData.data.length >> 2;
-
-    // 遍历
-    for (let i = 0; i < len; i++) {
-      const base = i << 2;
-      const r = imageData.data[base + 0];
-      const g = imageData.data[base + 1];
-      const b = imageData.data[base + 2];
-
-      const isGreenMainColor = g > r && g > b;
-
-      if (isGreenMainColor) {
-        imageData.data[base + 3] = 0;
-      }
-    }
-
-    return imageData;
   },
 };
 
