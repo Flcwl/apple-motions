@@ -46,29 +46,3 @@ html, body {
     margin-top: 12px;
   }
 }
-
-.btn {
-  padding: 4px 8px;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  border-radius: 4px;
-}
-
-.composite {
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  // background-image: url(./assets/bg_test1.jpg);
-}
-
-
-// 蔡徐坤武汉大学跳舞演示
-.composite1 {
-  // background-image: url(./assets/bg_test.jpg);
-  background-size: 100% 84%;
-  background-repeat: no-repeat;
-
-  canvas {
-    transform: translateY(60px) scale(0.5);
-  }
-}
