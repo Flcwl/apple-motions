@@ -82,12 +82,8 @@ var StealthDemo = {
       const g = imageData.data[base + 1];
       const b = imageData.data[base + 2];
 
-      const isGreenMainColor = g > r && g > b;
-      const betterGreenMainColor = isGreenMainColor && g > 100;
-
-      if (betterGreenMainColor) {
-        imageData.data[base + 3] = 0;
-      }
+      const mean = (r + g + b) / 3
+      imageData.data[base + 2] = imageData.data[base + 1] = imageData.data[base] = mean
     }
 
     return imageData;
