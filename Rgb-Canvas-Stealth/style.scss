@@ -58,17 +58,15 @@ html, body {
 .composite {
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  // background-image: url(./assets/bg_test1.jpg);
 }
 
-
-// 蔡徐坤武汉大学跳舞演示
-.composite1 {
-  // background-image: url(./assets/bg_test.jpg);
-  background-size: 100% 84%;
+// 蔡徐坤武汉大学跳舞门口演示
+.dance {
+  background-image: url(./assets/wuhan.jpg);
+  background-size: 100% 100%;
   background-repeat: no-repeat;
 
   canvas {
-    transform: translateY(60px) scale(0.5);
+    transform: translateY(63px) scale(0.5);
   }
 }
