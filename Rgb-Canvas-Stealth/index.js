@@ -79,9 +79,10 @@ var StealthDemo = {
       const r = imageData.data[base + 0];
       const g = imageData.data[base + 1];
       const b = imageData.data[base + 2];
-
-      const isGreenMainColor = g > r && g > b;
-      const betterGreenMainColor = isGreenMainColor && g > 100;
+      
+      const DIFF_VAL = 3
+      const isGreenMainColor = g - r > DIFF_VAL  && g - b > DIFF_VAL;
+      const betterGreenMainColor = isGreenMainColor && g > 55;
 
       if (betterGreenMainColor) {
         // if (isGreenMainColor) {
